@@ -1,7 +1,8 @@
 package Action.Options;
 
 import Controller.SystemEnvironment;
-import Data.Response;
+import Data.Message.Response;
+import Data.Message.ResponseStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,14 +15,14 @@ class AboutMeTest {
         SystemEnvironment.startSystem();
         loginWithTom();
 
-        Response response = new AboutMe(null).doAction(null);
+        Response response = AboutMe.doAction();
         String except = "Here is your information:\n" +
                 "ID:           101-1089\n" +
                 "Name:         Tom\n" +
                 "Email:        tom@gmail.com\n" +
                 "Phone Number: 010-7864123";
 
-        assertEquals(200, response.getStatue());
+        assertEquals(ResponseStatus.OK, response.getStatue());
         assertEquals(except, response.getMessage());
     }
 
@@ -29,11 +30,11 @@ class AboutMeTest {
     void should_show_wrong_message_when_not_login() {
         SystemEnvironment.startSystem();
 
-        Response response = new AboutMe(null).doAction(null);
+        Response response = AboutMe.doAction();
 
         String except = "You are not login";
 
-        assertEquals(200, response.getStatue());
+        assertEquals(ResponseStatus.NOTLOGIN, response.getStatue());
         assertEquals(except, response.getMessage());
     }
 

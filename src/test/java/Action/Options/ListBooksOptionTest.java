@@ -1,7 +1,7 @@
 package Action.Options;
 
 import Controller.SystemEnvironment;
-import Data.Response;
+import Data.Message.Response;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +12,7 @@ class ListBooksOptionTest {
     void should_list_all_books() {
         SystemEnvironment.startSystem();
 
-        Response response = new ListBooksOption(null).doAction(null);
+        Response response = ListBooksOption.doAction();
 
         String except = "---------------------------------------------------------------------------------------------------------------------\n" +
                 "|Book Id     |Book name                                         |Author                   |Year Published           |\n" +

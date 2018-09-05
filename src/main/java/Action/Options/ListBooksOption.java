@@ -1,16 +1,11 @@
 package Action.Options;
 
 import Data.Database;
-import Data.Response;
+import Data.Message.Response;
+import Data.Message.ResponseStatus;
 
-public class ListBooksOption extends OptionFactory{
-
-    public ListBooksOption(String option) {
-        super(option);
-    }
-
-    @Override
-    public Response doAction(String action) {
+public class ListBooksOption {
+    public static Response doAction() {
 
         StringBuilder stringBuilder = new StringBuilder(512);
         stringBuilder.append("---------------------------------------------------------------------------------------------------------------------\n")
@@ -26,6 +21,6 @@ public class ListBooksOption extends OptionFactory{
 
         stringBuilder.append("---------------------------------------------------------------------------------------------------------------------\n");
 
-        return new Response(200, stringBuilder.toString());
+        return new Response(ResponseStatus.OK, stringBuilder.toString());
     }
 }

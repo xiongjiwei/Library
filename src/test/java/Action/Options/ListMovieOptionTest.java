@@ -1,7 +1,7 @@
 package Action.Options;
 
 import Controller.SystemEnvironment;
-import Data.Response;
+import Data.Message.Response;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +12,7 @@ class ListMovieOptionTest {
     void should_list_all_movies() {
         SystemEnvironment.startSystem();
 
-        Response response = new ListMovieOption(null).doAction(null);
+        Response response = ListMovieOption.doAction();
 
         String except = "------------------------------------------------------------------------------------------------------------------------------\n" +
                 "|Movie Id     |Movie name                                                  |Director                   |Year    |Rate        |\n" +

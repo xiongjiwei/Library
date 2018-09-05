@@ -2,7 +2,8 @@ package Action.Options;
 
 import Controller.SystemEnvironment;
 import Data.Database;
-import Data.Response;
+import Data.Message.Response;
+import Data.Message.ResponseStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,10 +13,10 @@ class CheckOutMovieOptionTest {
     void should_login_when_not_login() {
         SystemEnvironment.startSystem();
 
-        Response response = new CheckOutMovieOption(null).doAction(null);
+        Response response = CheckOutMovieOption.doAction(null);
 
-        assertEquals(200, response.getStatue());
-        assertEquals("Your need login to checkout movies", response.getMessage());
+        assertEquals(ResponseStatus.NOTLOGIN, response.getStatue());
+        assertEquals("Your are not login", response.getMessage());
     }
 
     @Test
@@ -24,9 +25,9 @@ class CheckOutMovieOptionTest {
         SystemEnvironment.isLogin = true;
         SystemEnvironment.loginUser = "101-1089";
 
-        Response response = new CheckOutMovieOption(null).doAction("1199401");
+        Response response = CheckOutMovieOption.doAction("1199401");
 
-        assertEquals(200, response.getStatue());
+        assertEquals(ResponseStatus.OK, response.getStatue());
         assertEquals("Thank you! Enjoy the movie.", response.getMessage());
         assertFalse(Database.productStatueTable.get(1199401).isAvailable());
     }
@@ -37,10 +38,10 @@ class CheckOutMovieOptionTest {
         SystemEnvironment.isLogin = true;
         SystemEnvironment.loginUser = "101-1089";
 
-        Response response = new CheckOutMovieOption(null).doAction("fff");
+        Response response = CheckOutMovieOption.doAction("fff");
 
-        assertEquals(200, response.getStatue());
-        assertEquals("That movie is not available.", response.getMessage());
+        assertEquals(ResponseStatus.ILLEGAL, response.getStatue());
+        assertEquals("Illegal movie id.", response.getMessage());
     }
 
 }

@@ -1,16 +1,11 @@
 package Action.Options;
 
 import Data.Database;
-import Data.Response;
+import Data.Message.Response;
+import Data.Message.ResponseStatus;
 
-public class ListMovieOption extends OptionFactory {
-
-    public ListMovieOption(String option) {
-        super(option);
-    }
-
-    @Override
-    public Response doAction(String action) {
+public class ListMovieOption {
+    public static Response doAction() {
         StringBuilder stringBuilder = new StringBuilder(512);
         stringBuilder.append("------------------------------------------------------------------------------------------------------------------------------\n")
                      .append("|Movie Id     |Movie name                                                  |Director                   |Year    |Rate        |\n")
@@ -25,6 +20,6 @@ public class ListMovieOption extends OptionFactory {
 
         stringBuilder.append("------------------------------------------------------------------------------------------------------------------------------\n");
 
-        return new Response(200, stringBuilder.toString());
+        return new Response(ResponseStatus.OK, stringBuilder.toString());
     }
 }

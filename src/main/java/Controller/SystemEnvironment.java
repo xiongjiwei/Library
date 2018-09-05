@@ -1,9 +1,11 @@
 package Controller;
 
-import Action.ActionProcessor;
-import Action.Options.*;
 import Data.*;
+import View.AbstractPage;
 import View.MainPage;
+import View.Page.*;
+
+import java.util.ArrayList;
 
 public class SystemEnvironment {
 
@@ -11,6 +13,7 @@ public class SystemEnvironment {
     public static String loginUser = null;
 
     public static boolean isRun = false;
+    public static ArrayList<AbstractPage> menu = new ArrayList<>();
 
     public static MainPage startSystem() {
         initUserTable();
@@ -26,14 +29,14 @@ public class SystemEnvironment {
         return new MainPage();
     }
     private static void initMenu() {
-        ActionProcessor.menu.add(new Login("Login"));
-        ActionProcessor.menu.add(new CheckOutBookOption("Checkout Book"));
-        ActionProcessor.menu.add(new CheckOutMovieOption("Checkout Movie"));
-        ActionProcessor.menu.add(new ReturnOption("Return Products"));
-        ActionProcessor.menu.add(new ListBooksOption("List Books"));
-        ActionProcessor.menu.add(new ListMovieOption("List Movie"));
-        ActionProcessor.menu.add(new AboutMe("About Me"));
-        ActionProcessor.menu.add(new QuitOption("Quit"));
+        menu.add(new LoginPage("Login"));
+        menu.add(new CheckOutBooksPage("Checkout Book"));
+        menu.add(new CheckoutMoviePage("Checkout Movie"));
+        menu.add(new ReturnPage("Return Products"));
+        menu.add(new ListBooksPage("List Books"));
+        menu.add(new ListMoviePage("List Movie"));
+        menu.add(new AboutMePage("About Me"));
+        menu.add(new QuitPage("Quit"));
     }
 
     private static void initBookTable() {

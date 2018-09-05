@@ -1,46 +1,40 @@
 package Action.Options;
 
 import Controller.SystemEnvironment;
-import Data.Book;
 import Data.Database;
+import Data.Message.ResponseStatus;
 import Data.Movie;
-import Data.Response;
+import Data.Message.Response;
 
 import java.time.LocalDate;
 
-public class CheckOutMovieOption extends OptionFactory {
-
-    public CheckOutMovieOption(String option) {
-        super(option);
-    }
-
-    @Override
-    public Response doAction(String action) {
+public class CheckOutMovieOption {
+    public static Response doAction(String action) {
         if (!SystemEnvironment.isLogin) {
-            return new Response(200, "Your need login to checkout movies");
+            return new Response(ResponseStatus.NOTLOGIN, "Your are not login");
         }
 
         if (action == null) {
-            return new Response(100, "Input the movie id you want checkout");
+            return new Response(ResponseStatus.CONTINUE, "Movie id is required");
         }
 
-        int index;
+        int id;
         try {
-            index = Integer.valueOf(action);
+            id = Integer.valueOf(action);
         } catch (NumberFormatException e) {
-            return new Response(200, "That movie is not available.");
+            return new Response(ResponseStatus.ILLEGAL, "Illegal movie id.");
         }
 
-        Movie movie = Database.movieTable.get(index);
+        Movie movie = Database.movieTable.get(id);
 
         if (movie == null || !Database.productStatueTable.get(movie.getId()).isAvailable()) {
-            return new Response(200, "That movie is not available.");
+            return new Response(ResponseStatus.NOTAVAILABLE, "That movie is not available.");
         }
 
         Database.productStatueTable.get(movie.getId()).setAvailable(false);
         Database.productStatueTable.get(movie.getId()).setCheckoutCustomerName(SystemEnvironment.loginUser);
         Database.productStatueTable.get(movie.getId()).setCheckoutDate(LocalDate.now());
 
-        return new Response(200, "Thank you! Enjoy the movie.");
+        return new Response(ResponseStatus.OK, "Thank you! Enjoy the movie.");
     }
 }

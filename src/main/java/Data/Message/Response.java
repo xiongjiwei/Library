@@ -1,15 +1,15 @@
-package Data;
+package Data.Message;
 
 public class Response {
-    private int statue;
+    private ResponseStatus statue;
     private String message;
 
-    public Response(int statue, String message) {
+    public Response(ResponseStatus statue, String message) {
         this.statue = statue;
         this.message = message;
     }
 
-    public int getStatue() {
+    public ResponseStatus getStatue() {
         return statue;
     }
 

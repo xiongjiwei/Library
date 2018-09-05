@@ -1,19 +1,14 @@
 package Action.Options;
 
 import Controller.SystemEnvironment;
-import Data.Response;
+import Data.Message.Response;
+import Data.Message.ResponseStatus;
 
-public class QuitOption extends OptionFactory {
-
-    public QuitOption(String option) {
-        super(option);
-    }
-
-    @Override
-    public Response doAction(String action) {
+public class QuitOption {
+    public static Response doAction() {
 
         SystemEnvironment.isRun = false;
 
-        return new Response(200, "");
+        return new Response(ResponseStatus.OK, "");
     }
 }

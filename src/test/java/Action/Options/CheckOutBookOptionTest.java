@@ -2,7 +2,8 @@ package Action.Options;
 
 import Controller.SystemEnvironment;
 import Data.Database;
-import Data.Response;
+import Data.Message.Response;
+import Data.Message.ResponseStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,10 +14,10 @@ class CheckOutBookOptionTest {
     void should_login_when_not_login() {
         SystemEnvironment.startSystem();
 
-        Response response = new CheckOutBookOption(null).doAction(null);
+        Response response = CheckOutBookOption.doAction(null);
 
-        assertEquals(200, response.getStatue());
-        assertEquals("Your need login to checkout books", response.getMessage());
+        assertEquals(ResponseStatus.NOTLOGIN, response.getStatue());
+        assertEquals("Your are not login", response.getMessage());
     }
 
     @Test
@@ -25,9 +26,9 @@ class CheckOutBookOptionTest {
         SystemEnvironment.isLogin = true;
         SystemEnvironment.loginUser = "101-1089";
 
-        Response response = new CheckOutBookOption(null).doAction("2200801");
+        Response response = CheckOutBookOption.doAction("2200801");
 
-        assertEquals(200, response.getStatue());
+        assertEquals(ResponseStatus.OK, response.getStatue());
         assertEquals("Thank you! Enjoy the book.", response.getMessage());
         assertFalse(Database.productStatueTable.get(2200801).isAvailable());
     }
@@ -38,10 +39,10 @@ class CheckOutBookOptionTest {
         SystemEnvironment.isLogin = true;
         SystemEnvironment.loginUser = "101-1089";
 
-        Response response = new CheckOutBookOption(null).doAction("fff");
+        Response response = CheckOutBookOption.doAction("fff");
 
-        assertEquals(200, response.getStatue());
-        assertEquals("That book is not available.", response.getMessage());
+        assertEquals(ResponseStatus.ILLEGAL, response.getStatue());
+        assertEquals("illegal book id.", response.getMessage());
     }
 
 }
